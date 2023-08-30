@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 const ImageFetch = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState([]);
   const [fullUrl, setFullUrl] = useState("");
 
-  function thumbnailHandler() {
-    axios
-      .get(
+  useEffect(()=>{
+    axios.get(
         `https://api.unsplash.com/photos?client_id=fOoMT54u7twWaJhOBu8IDNUD0iOb5A9j2IQ9PLsBvS8`
       )
       .then((res) => {
@@ -19,8 +18,9 @@ const ImageFetch = () => {
       .catch((err) => {
         console.log(err);
       });
-  }
+  },[])
 
+  
   function fullImageHandler(index) {
     axios
       .get(
@@ -35,12 +35,15 @@ const ImageFetch = () => {
   }
 
   return (
-    <div>
-      <div>MY GALLARY</div>
-      <button onClick={thumbnailHandler}>click</button>
-      <div>
+    <div className="main-page">
+      <div className="heading-container">
+        <h1>
+            My Gallary
+        </h1>
+      </div>  
+      <div className="thumbnail-container">
         {thumbnailUrl.map((url, index) => (
-          <div>
+          <div className="container">
             <img
               key={index}
               src={url}
@@ -68,13 +71,17 @@ const ImageFetch = () => {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog-fullscreen">
+        <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
-            <div className="modal-body">
-              <img src={fullUrl} alt="full image" className="full" />
+            <div className="modal-body" style={{ maxWidth: "100%", maxHeight: "100vh" }}>
+              <img src={fullUrl} alt="full image" className="full"/>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
                 Close
               </button>
             </div>
