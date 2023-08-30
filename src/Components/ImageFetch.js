@@ -4,10 +4,10 @@ import { useState } from "react";
 const ImageFetch = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState([]);
   const [fullUrl, setFullUrl] = useState("");
-
+  const cliID= process.env.REACT_APP_CLIENT_ID;
   useEffect(()=>{
     axios.get(
-        `https://api.unsplash.com/photos?client_id=fOoMT54u7twWaJhOBu8IDNUD0iOb5A9j2IQ9PLsBvS8`
+        `https://api.unsplash.com/photos?client_id=${cliID}`
       )
       .then((res) => {
         let data = res.data;
@@ -24,7 +24,7 @@ const ImageFetch = () => {
   function fullImageHandler(index) {
     axios
       .get(
-        `https://api.unsplash.com/photos?client_id=fOoMT54u7twWaJhOBu8IDNUD0iOb5A9j2IQ9PLsBvS8`
+        `https://api.unsplash.com/photos?client_id=${cliID}`
       )
       .then((res) => {
         let data = res.data[index].urls.full;
@@ -35,19 +35,19 @@ const ImageFetch = () => {
   }
 
   return (
-    <div className="main-page">
-      <div className="heading-container">
+    <div className="container" >
+      <div className="heading">
         <h1>
-            My Gallary
+            Image Gallery
         </h1>
-      </div>  
-      <div className="thumbnail-container">
+      </div>
+      <div className="row">
         {thumbnailUrl.map((url, index) => (
-          <div className="container">
+          <div className="col-md-3 card">
             <img
               key={index}
               src={url}
-              style={{ width: "300px", height: "300px", margin: "10px" }}
+              style={{ width: "250px", height: "250px", padding: "10px" }}
               alt={`Image ${index}`}
             />
             <button
@@ -59,7 +59,7 @@ const ImageFetch = () => {
                 fullImageHandler(index);
               }}
             >
-              FULL IMAGE
+              VIEW IMAGE
             </button>
           </div>
         ))}
